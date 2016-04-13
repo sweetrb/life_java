@@ -36,15 +36,18 @@ public Life(int maxX, int maxY) {
   */
 public void game() {
 	System.out.println("Life::game()");
+	Term term = new Term();
 
 	boolean done;
 	done = Boolean.FALSE;
+	term.clear();
 	while (! done) {
-		System.out.print(cls);
 		for (int y=0 ; y < today.getMaxY() ; y++) {
 			for (int x=0 ; x < today.getMaxX() ; x++) {
 				// display current generation
-				System.out.print( today.get(x,y) ? 'O' : ' ' );
+				if (today.get(x,y) != tomorrow.get(x,y)) {
+					term.printat(x, y, today.get(x,y) ? "O" : " " );
+				}
 
 				// calculate next generation
 				int n = today.neighbors(x,y);
@@ -56,7 +59,6 @@ public void game() {
 				}
 				tomorrow.set(x,y,state);
 			} // for x
-			System.out.println();
 		} // for y
 
 		// swap the generations
