@@ -1,4 +1,4 @@
-<project>
+<project name="life" basedir="." default="main">
 
 	<target name="clean">
 		<delete dir="build"/>
@@ -9,7 +9,7 @@
 		<javac srcdir="src" destdir="build/classes"/>
 	</target>
 
-	<target name="jar">
+	<target name="jar" depends="compile">
 		<mkdir dir="build/jar"/>
 		<jar destfile="build/jar/life.jar" basedir="build/classes">
 			<manifest>
@@ -18,8 +18,8 @@
 		</jar>
 	</target>
 
-	<target name="run">
-		<java jar="build/jar/life.jar" fork="true"/>
-	</target>
+	<target name="clean-build" depends="clean,jar"/>
+
+	<target name="main" depends="jar"/>
 
 </project>
