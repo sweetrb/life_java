@@ -4,6 +4,8 @@
   * Class to hold a single generation of a game of Life grid of cells
   */
 
+package life;
+
 import java.util.Random;
 
 public class Generation {

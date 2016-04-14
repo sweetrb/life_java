@@ -3,7 +3,9 @@
   *
   * Main() application entry point class for Conway's Life
   */
-public class LifeMain {
+package life;
+
+public class Main {
 
 /**
   * main()
@@ -21,5 +23,5 @@ public static void main(String args[]) {
 	life.game();
 } // main()
 
-} // class LifeMain
+} // class Main
 

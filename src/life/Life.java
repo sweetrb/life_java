@@ -4,6 +4,9 @@
   * Application class for Conway's Life, with main()
   * Holds two Earth objects and impliment the rules and loop
   */
+
+package life;
+
 public class Life {
 
 private Generation today, tomorrow;

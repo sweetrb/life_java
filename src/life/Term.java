@@ -3,6 +3,8 @@
   *
   * Simple class to control linux terminal, clear screen, move cursor, get size, etc.
   */
+package life;
+
 class Term {
 	private char ESC = 0x1b;
 	private int LINES=0;
