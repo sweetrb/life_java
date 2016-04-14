@@ -36,7 +36,7 @@ public Life(int maxX, int maxY) {
   */
 public void game() {
 	System.out.println("Life::game()");
-	Term term = new Term();
+	Term term = new Term(maxY, maxX);
 
 	boolean done;
 	done = Boolean.FALSE;

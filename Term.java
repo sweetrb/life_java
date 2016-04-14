@@ -5,6 +5,13 @@
   */
 class Term {
 	private char ESC = 0x1b;
+	private int LINES=0;
+	private int COLUMNS=0;
+
+	public Term(int lines, int columns) {
+		LINES=lines;
+		COLUMNS=columns;
+	}
 
 	public void clear() {
 		System.out.format("%c[H%c[J", ESC, ESC);
@@ -19,15 +26,15 @@ class Term {
 		System.out.print(s);
 	}
 
-	public int LINES () {
-		String s = System.getenv("LINES");
-		System.out.format("LINES = '%s'\n", s);
-		int lines = Integer.parseInt(System.getenv("LINES"));
+	public int lines () {
+		//int lines = Integer.parseInt(System.getenv("LINES"));
+		int lines = LINES;
 		return lines;
 	}
 
-	public int COLUMNS () {
-		int cols = Integer.parseInt(System.getenv("COLUMNS"));
+	public int columns () {
+		//int cols = Integer.parseInt(System.getenv("COLUMNS"));
+		int cols = COLUMNS;
 		return cols;
 	}
 }
