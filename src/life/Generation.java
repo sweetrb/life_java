@@ -67,7 +67,6 @@ public void set(int x, int y, boolean state) {
   */
 public int neighbors(int x, int y) {
 	int n=0;	// the number of neighbors that this cell has
-	// TODO figure this out
 	int l, r, u, d;
 	l = x-1; if (l < 0) { l = maxX-1; }
 	r = x+1; if (r == maxX) { r = 0; }
