@@ -11,7 +11,7 @@ public class Life {
 
 private Generation today, tomorrow;
 private static final char [] cls = { 0x1b, 0x5b, 0x48, 0x1b, 0x5b, 0x4a } ;	// ANSI clear screen sequence
-public static final int defaultMaxX = 50;
+public static final int defaultMaxX = 55;
 public static final int defaultMaxY = 40;
 private int maxX;
 private int maxY;
