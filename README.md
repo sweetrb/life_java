@@ -1,6 +1,6 @@
 # Conway's game of LIFE implimented in java
 
-This appliction was developed to execute in a text mode
+This application was developed to execute in a text mode
 linux environment.
 
 It uses two escape sequences to control Text mode screen IO; 
