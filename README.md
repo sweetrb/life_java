@@ -1,8 +1,8 @@
 # Conway's Game of Life in Java
 
-A terminal-based implementation of Conway's Game of Life using Java and ANSI escape sequences.
+A terminal-based implementation of Conway's Game of Life using Java with JLine for cross-platform terminal control.
 
-This version uses escape sequences for cursor control and screen clearing, and was developed on a Raspberry Pi 2 running Raspbian. It has also been verified on OS X El Capitan 10.11.4 through macOS Sequoia.
+This version uses JLine 3.x for terminal manipulation and keyboard input, providing consistent behavior across different platforms. Originally developed on a Raspberry Pi 2 running Raspbian, it has also been verified on OS X El Capitan 10.11.4 through macOS Sequoia.
 
 ## Author
 
