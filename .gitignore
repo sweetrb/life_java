@@ -5,4 +5,18 @@
 # Ant build directory
 build/
 
+# Editor files
+*.swp
+*~
+
+# IDE files
+.idea/
+*.iml
+.settings/
+.project
+.classpath
+
+# OS files
+.DS_Store
+
 
