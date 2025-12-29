@@ -1,5 +1,8 @@
-# ignore compiled code
+# Compiled code
 *.class
 *.jar
+
+# Ant build directory
+build/
 
 
