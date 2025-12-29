@@ -7,6 +7,8 @@
 
 package life;
 
+import java.io.IOException;
+
 public class Life {
 
 private Generation today, tomorrow;
@@ -19,12 +21,10 @@ private int maxY;
 // default constructor
 public Life() {
 	this(defaultMaxX, defaultMaxY);
-	System.out.println("Life::Life()");
 }
 
 // constructor with world dimensions
 public Life(int maxX, int maxY) {
-	System.out.println("Life::Life("+maxX+","+maxY+")");
 	this.maxX=maxX;
 	this.maxY=maxY;
 	today = new Generation(this.maxX, this.maxY);
@@ -38,38 +38,54 @@ public Life(int maxX, int maxY) {
   * main application loop, each iteration is one generation
   */
 public void game() {
-	System.out.println("Life::game()");
-	Term term = new Term(maxY, maxX);
+	Term term = null;
+	try {
+		term = new Term(maxY, maxX);
+		term.clear();
 
-	boolean done;
-	done = Boolean.FALSE;
-	term.clear();
-	while (! done) {
-		for (int y=0 ; y < today.getMaxY() ; y++) {
-			for (int x=0 ; x < today.getMaxX() ; x++) {
-				// display current generation
-				if (today.get(x,y) != tomorrow.get(x,y)) {
-					term.printat(x, y, today.get(x,y) ? "O" : " " );
-				}
+		boolean done = false;
+		while (!done) {
+			for (int y=0 ; y < today.getMaxY() ; y++) {
+				for (int x=0 ; x < today.getMaxX() ; x++) {
+					// display current generation
+					if (today.get(x,y) != tomorrow.get(x,y)) {
+						term.printat(x, y, today.get(x,y) ? "O" : " " );
+					}
 
-				// calculate next generation
-				int n = today.neighbors(x,y);
-				boolean state = false;	// default to dead
-				if (n == 2) {
-					state = today.get(x,y);
-				} else if (n == 3) {
-					state = true;
-				}
-				tomorrow.set(x,y,state);
-			} // for x
-		} // for y
+					// calculate next generation
+					int n = today.neighbors(x,y);
+					boolean state = false;	// default to dead
+					if (n == 2) {
+						state = today.get(x,y);
+					} else if (n == 3) {
+						state = true;
+					}
+					tomorrow.set(x,y,state);
+				} // for x
+			} // for y
 
-		// swap the generations
-		Generation tmp = today;
-		today = tomorrow;
-		tomorrow = tmp;
+			// swap the generations
+			Generation tmp = today;
+			today = tomorrow;
+			tomorrow = tmp;
 
-	} // while ! done
+			// check for keyboard input
+			int key = term.getKey();
+			if (key == 'q') {
+				done = true;
+			} else if (key == 'r') {
+				today.randomize();
+				term.clear();
+			}
+
+		} // while ! done
+	} catch (IOException e) {
+		System.err.println("Terminal error: " + e.getMessage());
+	} finally {
+		if (term != null) {
+			term.close();
+		}
+	}
 } // game()
 
 } // class Life

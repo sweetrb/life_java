@@ -6,12 +6,17 @@
 
 	<target name="compile">
 		<mkdir dir="build/classes"/>
-		<javac srcdir="src" destdir="build/classes" includeantruntime="false"/>
+		<javac srcdir="src" destdir="build/classes" includeantruntime="false">
+			<classpath>
+				<fileset dir="lib" includes="*.jar"/>
+			</classpath>
+		</javac>
 	</target>
 
 	<target name="jar" depends="compile">
 		<mkdir dir="build/jar"/>
 		<jar destfile="build/jar/life.jar" basedir="build/classes">
+			<zipgroupfileset dir="lib" includes="*.jar"/>
 			<manifest>
 				<attribute name="Main-Class" value="life.Main"/>
 			</manifest>

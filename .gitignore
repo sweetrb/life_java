@@ -5,6 +5,9 @@
 # Ant build directory
 build/
 
+# Library dependencies (downloaded at build time)
+lib/
+
 # Editor files
 *.swp
 *~

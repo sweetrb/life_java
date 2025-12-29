@@ -24,9 +24,11 @@ The `life` script automatically passes terminal dimensions to the jar file.
 
 ## Controls
 
-- `Ctrl+C` - Quit (no other controls implemented)
+- `q` - Quit
+- `r` - Restart with a new random pattern
 
 ## Dependencies
 
 - Java JDK
 - Apache Ant
+- JLine 3.x (bundled in JAR, download to `lib/` before building)

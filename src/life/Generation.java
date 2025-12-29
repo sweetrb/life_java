@@ -17,7 +17,6 @@ private int maxX, maxY;
   * Generation() Constructor
   */
 public Generation(int x, int y) {
-	System.out.println("Generation::Generation(" +x+","+y+")");
 	maxX = x;
 	maxY = y;
 	cell = new boolean[maxX][maxY];	// create 2D array.  It will be initialized to false automatically
@@ -40,7 +39,6 @@ public int getMaxY() {
   */
 public void randomize() {
 	Random r = new Random();
-	System.out.println("Generation::randomize()");
 	for (int y=0; y<maxY ; y++) {
 		for (int x=0; x<maxX ; x++) {
 			cell[x][y] = (r.nextInt(5) > 0) ? Boolean.FALSE : Boolean.TRUE ;
