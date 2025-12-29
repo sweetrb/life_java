@@ -24,8 +24,7 @@ The `life` script automatically passes terminal dimensions to the jar file.
 
 ## Controls
 
-- `q` - Quit
-- `r` - Restart with a new random pattern
+- `Ctrl+C` - Quit (no other controls implemented)
 
 ## Dependencies
 
