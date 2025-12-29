@@ -1,17 +1,33 @@
-# Conway's game of LIFE implimented in java
+# Conway's Game of Life in Java
 
-This application was developed to execute in a text mode
-linux environment.
+A terminal-based implementation of Conway's Game of Life using Java and ANSI escape sequences.
 
-It uses two escape sequences to control Text mode screen IO; 
-to clear the screen and to move the cursor.
+This version uses escape sequences for cursor control and screen clearing, and was developed on a Raspberry Pi 2 running Raspbian. It has also been verified on OS X El Capitan 10.11.4 through macOS Sequoia.
 
-These sequences are currently hard coded and should work in 
-the majority of modern Linux consoles and terminals such as xterm.
+## Author
 
-The application needs to be passed the screen dimensions as command
-line parameters due to the fact that System.getenv() can not read
-the $COLUMNS and $LINES environment variables.
+Rob Sweet
 
-A simple bash script "life" in the root directory is provided to 
-automatically pass these values to the java jar file and execute it.
+## Building
+
+```bash
+ant
+```
+
+## Running
+
+```bash
+./life
+```
+
+The `life` script automatically passes terminal dimensions to the jar file.
+
+## Controls
+
+- `q` - Quit
+- `r` - Restart with a new random pattern
+
+## Dependencies
+
+- Java JDK
+- Apache Ant
