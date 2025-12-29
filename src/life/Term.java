@@ -13,7 +13,7 @@ import org.jline.utils.NonBlockingReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-class Term {
+public class Term {
 	private Terminal terminal;
 	private NonBlockingReader reader;
 	private PrintWriter writer;
@@ -78,7 +78,7 @@ class Term {
 			}
 			terminal.close();
 		} catch (IOException e) {
-			// ignore
+			System.err.println("Warning: Error closing terminal: " + e.getMessage());
 		}
 	}
 }

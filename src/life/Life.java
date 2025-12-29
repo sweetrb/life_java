@@ -2,7 +2,7 @@
   * Life
   *
   * Application class for Conway's Life, with main()
-  * Holds two Earth objects and impliment the rules and loop
+  * Holds two Earth objects and implement the rules and loop
   */
 
 package life;
@@ -12,7 +12,6 @@ import java.io.IOException;
 public class Life {
 
 private Generation today, tomorrow;
-private static final char [] cls = { 0x1b, 0x5b, 0x48, 0x1b, 0x5b, 0x4a } ;	// ANSI clear screen sequence
 public static final int defaultMaxX = 55;
 public static final int defaultMaxY = 40;
 private int maxX;
@@ -25,10 +24,10 @@ public Life() {
 
 // constructor with world dimensions
 public Life(int maxX, int maxY) {
-	this.maxX=maxX;
-	this.maxY=maxY;
-	today = new Generation(this.maxX, this.maxY);
-	tomorrow = new Generation(this.maxX, this.maxY);
+	this.maxX = maxX;
+	this.maxY = maxY;
+	today = new Generation(maxX, maxY);
+	tomorrow = new Generation(maxX, maxY);
 	today.randomize();
 } // Life(x,y) Constructor
 
