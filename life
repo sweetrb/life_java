@@ -1,4 +1,4 @@
 #!/bin/bash
 DIR="$(cd "$(dirname "$0")" && pwd)"
-java -jar "$DIR/build/jar/life.jar" `tput cols` `tput lines`
+java -jar "$DIR/build/jar/life.jar" `tput cols` `tput lines` "$@"
 clear

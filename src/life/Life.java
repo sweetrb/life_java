@@ -16,11 +16,18 @@ public static final int defaultMaxX = 55;
 public static final int defaultMaxY = 40;
 private int maxX;
 private int maxY;
+private int restartAfter = 0;	// generations between automatic restarts, 0 = never
 
 // default constructor
 public Life() {
 	this(defaultMaxX, defaultMaxY);
 }
+
+// constructor with world dimensions and an automatic restart interval
+public Life(int maxX, int maxY, int restartAfter) {
+	this(maxX, maxY);
+	this.restartAfter = restartAfter;
+} // Life(x,y,restartAfter) Constructor
 
 // constructor with world dimensions
 public Life(int maxX, int maxY) {
@@ -43,6 +50,7 @@ public void game() {
 		term.clear();
 
 		boolean done = false;
+		int gen = 0;		// generations since the last (re)start
 		while (!done) {
 			for (int y=0 ; y < today.getMaxY() ; y++) {
 				for (int x=0 ; x < today.getMaxX() ; x++) {
@@ -71,6 +79,13 @@ public void game() {
 			Generation tmp = today;
 			today = tomorrow;
 			tomorrow = tmp;
+
+			// automatic restart, the same effect as the user hitting 'r'
+			if (restartAfter != 0 && ++gen >= restartAfter) {
+				today.randomize();
+				term.clear();
+				gen = 0;
+			}
 
 			// check for keyboard input
 			int key = term.getKey();

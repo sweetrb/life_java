@@ -30,9 +30,16 @@ ant
 
 ```bash
 ./life
+./life --restart 20    # reseed every 20 generations
 ```
 
-The `life` script automatically passes terminal dimensions to the jar file.
+The `life` script automatically passes terminal dimensions to the jar file,
+followed by any options you give it.
+
+## Options
+
+- `-r`, `--restart <generations>` - restart with a new random pattern every
+  `<generations>` generations (0, the default, never restarts automatically)
 
 ## Controls
 
