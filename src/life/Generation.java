@@ -12,6 +12,7 @@ public class Generation {
 
 private boolean [][] cell;	// create 2D array.  It will be initialized to false automatically
 private int maxX, maxY;
+public static final int startingDensity = 30;	// percent of cells initialized to alive
 
 /**
   * Generation() Constructor
@@ -41,7 +42,7 @@ public void randomize() {
 	Random r = new Random();
 	for (int y=0; y<maxY ; y++) {
 		for (int x=0; x<maxX ; x++) {
-			cell[x][y] = r.nextBoolean();  // 50% alive
+			cell[x][y] = r.nextInt(100) < startingDensity;
 		}
 	}
 } // randomize()
