@@ -17,17 +17,48 @@ public static final int defaultMaxY = 40;
 private int maxX;
 private int maxY;
 private int restartAfter = 0;	// generations between automatic restarts, 0 = never
+private boolean showGenerations = false;	// put the generation count in the pane title
+private boolean showTime = false;		// put the time per generation in the pane title
+
+// how often the pane title is refreshed, in milliseconds.  Rewriting it every
+// generation would cost more than the game does.
+private static final long titleIntervalMs = 100;
 
 // default constructor
 public Life() {
 	this(defaultMaxX, defaultMaxY);
 }
 
+// constructor with world dimensions, an automatic restart interval and what
+// the pane title should report
+public Life(int maxX, int maxY, int restartAfter, boolean showGenerations, boolean showTime) {
+	this(maxX, maxY);
+	this.restartAfter = restartAfter;
+	this.showGenerations = showGenerations;
+	this.showTime = showTime;
+} // Life(x,y,restartAfter,showGenerations,showTime) Constructor
+
 // constructor with world dimensions and an automatic restart interval
 public Life(int maxX, int maxY, int restartAfter) {
 	this(maxX, maxY);
 	this.restartAfter = restartAfter;
 } // Life(x,y,restartAfter) Constructor
+
+/**
+  * title()
+  *
+  * what the pane title should say for this generation and rate
+  */
+private String title(long generations, double usPerGen) {
+	StringBuilder t = new StringBuilder("Java");
+	if (showGenerations) {
+		t.append(" | gen ").append(generations);
+	}
+	if (showTime && usPerGen > 0.0) {
+		t.append(String.format(" | %.1f us/gen", usPerGen));
+	}
+	return t.toString();
+} // title()
 
 // constructor with world dimensions
 public Life(int maxX, int maxY) {
@@ -50,8 +81,16 @@ public void game() {
 		term.clear();
 
 		boolean done = false;
-		int gen = 0;		// generations since the last (re)start
+		int gen = 0;			// generations since the last (re)start
+		long generations = 0;	// generations since the program started
+
+		boolean titled = showGenerations || showTime;
+		long sampled = System.nanoTime();
+		long sampledAt = 0;
+		double usPerGen = 0.0;
+
 		while (!done) {
+			generations++;
 			for (int y=0 ; y < today.getMaxY() ; y++) {
 				for (int x=0 ; x < today.getMaxX() ; x++) {
 					// display current generation
@@ -87,6 +126,21 @@ public void game() {
 			if (restartAfter != 0 && ++gen >= restartAfter) {
 				today.randomize();
 				gen = 0;
+			}
+
+			// refresh the pane title, at most every titleIntervalMs
+			if (titled) {
+				long now = System.nanoTime();
+				long elapsedUs = (now - sampled) / 1000;
+				if (elapsedUs >= titleIntervalMs * 1000) {
+					if (generations > sampledAt) {
+						usPerGen = (double) elapsedUs / (generations - sampledAt);
+					}
+					term.setTitle(title(generations, usPerGen));
+					term.refresh();
+					sampled = now;
+					sampledAt = generations;
+				}
 			}
 
 			// check for keyboard input

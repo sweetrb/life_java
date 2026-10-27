@@ -36,8 +36,10 @@ public static void main(String args[]) {
 		System.exit(1);
 	}
 
-	// Optional automatic restart interval
+	// Optional automatic restart interval and pane title reporting
 	int restartAfter = 0;
+	boolean showGenerations = false;
+	boolean showTime = false;
 	for (int i=2 ; i < args.length ; i++) {
 		if (args[i].equals("-r") || args[i].equals("--restart")) {
 			if (++i >= args.length) {
@@ -56,6 +58,10 @@ public static void main(String args[]) {
 				System.err.println("Error: generation count must not be negative");
 				System.exit(1);
 			}
+		} else if (args[i].equals("-g") || args[i].equals("--generations")) {
+			showGenerations = true;
+		} else if (args[i].equals("-t") || args[i].equals("--time")) {
+			showTime = true;
 		} else {
 			System.err.println("Error: unknown option '" + args[i] + "'");
 			usage();
@@ -63,7 +69,7 @@ public static void main(String args[]) {
 		}
 	}
 
-	Life life = new Life(columns, lines, restartAfter);
+	Life life = new Life(columns, lines, restartAfter, showGenerations, showTime);
 	life.game();
 } // main()
 
@@ -71,10 +77,12 @@ public static void main(String args[]) {
   * usage()
   */
 private static void usage() {
-	System.err.println("Usage: java life.Main <columns> <lines> [-r | --restart <generations>]");
+	System.err.println("Usage: java life.Main <columns> <lines> [-r | --restart <generations>] [-g | --generations] [-t | --time]");
 	System.err.println("Example: java life.Main 80 24 --restart 20");
 	System.err.println("  -r, --restart <generations>  restart with a new random pattern");
 	System.err.println("                               every <generations> generations (0 = never)");
+	System.err.println("  -g, --generations            show the generation count in the pane title");
+	System.err.println("  -t, --time                   show the time per generation in the pane title");
 } // usage()
 
 } // class Main
