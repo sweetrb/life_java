@@ -24,6 +24,12 @@ private boolean showTime = false;		// put the time per generation in the pane ti
 // generation would cost more than the game does.
 private static final long titleIntervalMs = 100;
 
+// How many unchanged cells it is worth writing over rather than emitting a
+// fresh cursor move.  A move costs about 8 bytes, an unchanged cell 1, so
+// spanning a short gap is cheaper than jumping it.  This is the same trade
+// curses makes internally for the C++, Perl and Python versions.
+private static final int maxGap = 8;
+
 // default constructor
 public Life() {
 	this(defaultMaxX, defaultMaxY);
@@ -91,11 +97,16 @@ public void game() {
 
 		while (!done) {
 			generations++;
+			int[] changed = new int[today.getMaxX()];	// columns to redraw, ascending
+
 			for (int y=0 ; y < today.getMaxY() ; y++) {
+				int count = 0;
+
 				for (int x=0 ; x < today.getMaxX() ; x++) {
-					// display current generation
+					// note what changed before tomorrow's cell is overwritten:
+					// it still holds what is on the screen
 					if (today.get(x,y) != tomorrow.get(x,y)) {
-						term.printat(x, y, today.get(x,y) ? "O" : " " );
+						changed[count++] = x;
 					}
 
 					// calculate next generation
@@ -108,6 +119,26 @@ public void game() {
 					}
 					tomorrow.set(x,y,state);
 				} // for x
+
+				// draw the row as spans: one cursor move per span, then the
+				// cells themselves, gaps of up to maxGap written over rather
+				// than jumped.  Term skips the move for an adjacent cell, so
+				// a span costs one escape sequence however long it is.
+				int i = 0;
+				while (i < count) {
+					int first = changed[i];
+					int last = first;
+					int j = i + 1;
+					while (j < count && changed[j] - last <= maxGap) {
+						last = changed[j];
+						j++;
+					}
+
+					for (int x=first ; x <= last ; x++) {
+						term.printat(x, y, today.get(x,y) ? "O" : " " );
+					}
+					i = j;
+				}
 			} // for y
 
 			// write this generation's changes in one go, as curses' refresh()
