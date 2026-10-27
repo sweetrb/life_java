@@ -63,6 +63,10 @@ public void game() {
 				} // for x
 			} // for y
 
+			// write this generation's changes in one go, as curses' refresh()
+			// does at the end of the C++ version's draw()
+			term.refresh();
+
 			// swap the generations
 			Generation tmp = today;
 			today = tomorrow;
