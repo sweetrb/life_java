@@ -80,10 +80,12 @@ public void game() {
 			today = tomorrow;
 			tomorrow = tmp;
 
-			// automatic restart, the same effect as the user hitting 'r'
+			// automatic restart, the same effect as the user hitting 'r'.
+			// Deliberately no clear(): tomorrow still holds the generation on
+			// the screen, so the next frame's diff repaints exactly what
+			// changed.  Clearing would blank cells the diff then skips.
 			if (restartAfter != 0 && ++gen >= restartAfter) {
 				today.randomize();
-				term.clear();
 				gen = 0;
 			}
 
@@ -93,7 +95,6 @@ public void game() {
 				done = true;
 			} else if (key == 'r') {
 				today.randomize();
-				term.clear();
 			}
 
 		} // while ! done
