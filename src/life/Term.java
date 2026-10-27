@@ -117,6 +117,14 @@ public class Term {
 	}
 
 	/**
+	 * Set the terminal's (or iTerm pane's) title.  OSC 1 leaves the cursor and
+	 * attributes alone, so it rides along in the frame buffer harmlessly.
+	 */
+	public void setTitle(String title) {
+		frame.append(ESC).append(']').append('1').append(';').append(title).append((char) 0x07);
+	}
+
+	/**
 	 * Write the frame built up since the last refresh() and start a new one.
 	 */
 	public void refresh() {
